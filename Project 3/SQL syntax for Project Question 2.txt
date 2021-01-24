@@ -1,0 +1,10 @@
+SELECT DISTINCT(standard_quartile), count(name) OVER (PARTITION BY standard_quartile) AS TOTALS
+FROM(SELECT title, name, rental_duration,NTILE(4) OVER(ORDER BY rental_duration) standard_quartile
+FROM(SELECT f.title, c.name, f.rental_duration
+ FROM Category c
+ Join film_category fc
+ ON c.category_id = fc.category_id
+ Join film f
+ ON fc.film_id=f.film_id)sub
+ WHERE name IN ('Animation', 'Children', 'Classics', 'Comedy', 'Family', 'Music'))sub2
+ORDER BY  1

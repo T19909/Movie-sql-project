@@ -1,0 +1,7 @@
+SELECT store_id, DATE_PART('year',rental_date)AS Years,DATE_PART('month',rental_date)AS months, COUNT(rental_id)
+FROM(SELECT i.store_id,r.rental_date, r.rental_id
+FROM Inventory i
+Join rental r
+ON i.inventory_id=r.inventory_id)t1
+GROUP BY 1,2,3
+ORDER BY 4 DESC
